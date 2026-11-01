@@ -1,5 +1,5 @@
-const CACHE='arcana-shell-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest'];
+const CACHE='arcana-shell-v2';
+const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./assets/cat-logo.png','./assets/witch-hat.png','./assets/mystic-bg.png','./assets/icon-library.png','./assets/icon-tarot.png','./assets/icon-pentacle.png','./assets/icon-moon.png','./assets/icon-crystal.png','./assets/icon-balance.png','./assets/icon-settings.png','./assets/icon-search.png','./assets/icon-bookmark.png','./assets/icon-star.png','./assets/icon-history.png','./assets/icon-delete.png','./assets/icon-paw.png','./assets/icon-help.png','./assets/icon-home.png','./assets/icon-calendar.png','./assets/icon-list.png','./assets/icon-share.png','./assets/icon-192.png','./assets/icon-512.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{if(new URL(e.request.url).origin===location.origin){const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy))}return r}).catch(()=>caches.match('./index.html'))))});
