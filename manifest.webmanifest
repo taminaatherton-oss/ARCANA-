@@ -1,0 +1,10 @@
+{
+  "name": "ARCANA — личный исследовательский ассистент",
+  "short_name": "ARCANA",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#100e17",
+  "theme_color": "#171321",
+  "lang": "ru",
+  "description": "Личная библиотека и ассистент по Таро, рунам и эзотерическим традициям."
+}

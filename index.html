@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#171321">
+  <meta name="description" content="ARCANA — личный исследовательский ассистент по Таро, рунам и эзотерическим традициям.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <title>ARCANA</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="brand-mark">✧</div><div><b>ARCANA</b><small>личная библиотека знаний</small></div></div>
+      <button class="nav active" data-view="chat">◈ <span>Ассистент</span></button>
+      <button class="nav" data-view="library">▤ <span>Библиотека</span></button>
+      <button class="nav" data-view="notes">✎ <span>Заметки</span></button>
+      <button class="nav" data-view="settings">⚙ <span>Настройки ИИ</span></button>
+      <div class="sidebar-bottom"><span class="dot"></span> Данные хранятся на этом устройстве</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Меню">☰</button>
+        <div><b id="pageTitle">Ассистент</b><small id="statusLine">Локальная библиотека готова</small></div>
+        <button class="icon-btn" id="newChat" title="Новый диалог">＋</button>
+      </header>
+
+      <section class="view active" id="view-chat">
+        <div class="chat-wrap">
+          <div class="welcome" id="welcome">
+            <div class="orb">✧</div>
+            <h1>О чём будем исследовать?</h1>
+            <p>Задавай вопросы по Таро, рунам, символизму и традициям. Я буду искать опору в твоих книгах и отмечать, где заканчивается источник и начинается интерпретация.</p>
+            <div class="prompt-grid">
+              <button class="prompt" data-prompt="Сравни трактовки руны Альгиз в разных традициях. Покажи источники.">Сравнить трактовки руны</button>
+              <button class="prompt" data-prompt="Разбери символику карты Луна в системе Райдера—Уэйта. Отдели классические значения от современных интерпретаций.">Исследовать аркан Луны</button>
+              <button class="prompt" data-prompt="Как корректно вести дневник раскладов и проверять свои интерпретации?">Дневник практики</button>
+              <button class="prompt" data-prompt="Какие книги уже добавлены в мою библиотеку?">Моя библиотека</button>
+            </div>
+          </div>
+          <div class="messages" id="messages" aria-live="polite"></div>
+          <form class="composer" id="chatForm">
+            <textarea id="question" rows="1" placeholder="Задай вопрос… (Enter — отправить, Shift+Enter — новая строка)"></textarea>
+            <button class="send" type="submit" title="Отправить">➤</button>
+          </form>
+          <div class="fineprint">Ответы ИИ могут содержать ошибки. Проверяй важные утверждения по первоисточникам.</div>
+        </div>
+      </section>
+
+      <section class="view" id="view-library">
+        <div class="content">
+          <div class="section-head"><div><h1>Библиотека</h1><p>Добавляй книги и материалы — поиск по ним выполняется локально.</p></div>
+            <label class="primary-btn">＋ Добавить файлы<input id="fileInput" type="file" accept=".txt,.md,.pdf" multiple hidden></label>
+          </div>
+          <div class="notice">В первой версии поддерживаются TXT, MD и текстовые PDF. Сканированные PDF без текстового слоя пока не распознаются.</div>
+          <div id="libraryList" class="library-list"><div class="empty">Пока нет книг. Добавь первый материал.</div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-notes">
+        <div class="content">
+          <h1>Заметки и дневник</h1><p>Сохраняй собственные наблюдения, расклады и результаты практики.</p>
+          <input id="noteTitle" class="field" placeholder="Название заметки">
+          <textarea id="noteBody" class="field note-area" placeholder="Запиши наблюдения, карты, руны, дату и выводы…"></textarea>
+          <button class="primary-btn" id="saveNote">Сохранить заметку</button>
+          <div id="notesList" class="notes-list"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="content settings">
+          <h1>Настройки ИИ</h1>
+          <p>Подключи любой совместимый сервер с API формата OpenAI Chat Completions. Ключ хранится в локальном хранилище браузера — не используй общий или чужой телефон.</p>
+          <label>Режим работы</label>
+          <select id="aiMode" class="field">
+            <option value="library">Только библиотека (без генеративного ИИ)</option>
+            <option value="remote">Удалённый API</option>
+            <option value="local">Локальный сервер модели</option>
+          </select>
+          <label>Адрес API</label><input id="apiUrl" class="field" placeholder="https://example.com/v1/chat/completions">
+          <label>Название модели</label><input id="modelName" class="field" placeholder="Например, model-name">
+          <label>API-ключ (если требуется)</label><input id="apiKey" class="field" type="password" autocomplete="off" placeholder="Необязательно для локального сервера">
+          <div class="notice">Для локального сервера укажи адрес, доступный с телефона/планшета в твоей сети. Сервер должен разрешать CORS. Для удалённого API браузерный вызов может быть заблокирован политикой CORS; надёжнее позднее добавить собственный защищённый backend. Не публикуй ключ в GitHub.</div>
+          <button class="primary-btn" id="saveSettings">Сохранить настройки</button>
+          <button class="secondary-btn" id="testAI">Проверить подключение</button>
+          <p id="settingsStatus" class="status"></p>
+          <hr>
+          <h2>Данные</h2>
+          <button class="secondary-btn" id="exportData">Экспортировать библиотеку и заметки (JSON)</button>
+          <button class="danger-btn" id="clearData">Удалить все локальные данные</button>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
