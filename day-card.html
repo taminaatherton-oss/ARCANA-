@@ -1,0 +1,37 @@
+<!-- ARCANA · структура раздела «Карта дня». Наполняется файлом assets/js/arcana-daycard.js -->
+<section class="aa-section" id="arcana-daycard" aria-labelledby="aa-day-title">
+  <p class="aa-eyebrow">DAILY TAROT · NATAL TRANSITS</p>
+  <h1 class="aa-title" id="aa-day-title">Карта дня</h1>
+  <p class="aa-lead">Аркан выбирается по сильнейшему транзиту дня к твоей натальной карте.</p>
+
+  <div class="aa-daynav">
+    <button type="button" class="aa-btn aa-btn-ghost" data-aa="day-prev" aria-label="Предыдущий день">‹</button>
+    <div class="aa-daynav-date" data-aa="day-date"></div>
+    <button type="button" class="aa-btn aa-btn-ghost" data-aa="day-next" aria-label="Следующий день">›</button>
+    <button type="button" class="aa-btn aa-btn-ghost" data-aa="day-today">Сегодня</button>
+  </div>
+
+  <div class="aa-cards-row">
+    <article class="aa-tcard" data-aa="main-card"></article>
+    <article class="aa-tcard aa-tcard-small" data-aa="backdrop-card"></article>
+  </div>
+
+  <h2 class="aa-h2">Почему этот аркан</h2>
+  <div class="aa-card" data-aa="reason"></div>
+
+  <h2 class="aa-h2">Вопрос дня</h2>
+  <div class="aa-card aa-question" data-aa="question"></div>
+
+  <h2 class="aa-h2">Другие транзиты дня</h2>
+  <div class="aa-card" data-aa="other-transits"></div>
+
+  <h2 class="aa-h2">Небо сегодня</h2>
+  <div class="aa-card aa-table-wrap"><table class="aa-table" data-aa="sky-table"></table></div>
+
+  <div class="aa-actions">
+    <button type="button" class="aa-btn" data-aa="copy-note">Скопировать запись для дневника</button>
+    <span class="aa-copied" data-aa="copied" hidden>Скопировано ✓</span>
+  </div>
+
+  <p class="aa-note">Карта дня фиксируется на полдень по Москве, поэтому не меняется в течение суток. Толкование — повод для размышления, а не прогноз.</p>
+</section>

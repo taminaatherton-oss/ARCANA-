@@ -1,0 +1,15 @@
+ДВЕ СТРОКИ ДЛЯ index.html (больше ничего менять не нужно)
+
+1) Внутри <head>, перед </head>:
+
+  <link rel="stylesheet" href="astro/assets/css/arcana-astro.css">
+
+2) В конце <body>, перед </body>:
+
+  <script src="astro/assets/js/arcana-astro-loader.js" defer></script>
+
+Готово. В боковом меню появятся пункты «Натальная карта» и «Карта дня».
+Если меню по какой-то причине не найдётся, появится кнопка «✦ Астро» в правом нижнем углу.
+
+Прямые ссылки на разделы: https://taminaatherton-oss.github.io/ARCANA-/#astro-natal  и  #astro-day
+Проверка отдельно от основного сайта: https://taminaatherton-oss.github.io/ARCANA-/astro/standalone.html

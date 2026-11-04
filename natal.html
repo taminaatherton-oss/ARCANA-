@@ -1,0 +1,49 @@
+<!-- ARCANA · структура раздела «Натальная карта». Наполняется файлом assets/js/arcana-natal.js -->
+<section class="aa-section" id="arcana-natal" aria-labelledby="aa-natal-title">
+  <p class="aa-eyebrow">PERSONAL ASTROLOGY</p>
+  <h1 class="aa-title" id="aa-natal-title">Натальная карта</h1>
+  <p class="aa-lead">Положения планет в момент рождения и их связь с арканами Таро.</p>
+
+  <div class="aa-card aa-birth">
+    <div class="aa-birth-info" data-aa="birth-info"></div>
+    <details class="aa-details">
+      <summary>Уточнить данные рождения</summary>
+      <form class="aa-form" data-aa="birth-form" autocomplete="off">
+        <label>Дата <input type="date" name="date" required></label>
+        <label>Время (местное) <input type="time" name="time" required></label>
+        <label>Часовой пояс (UTC+) <input type="number" name="tz" step="0.5" min="-12" max="14" required></label>
+        <label>Широта <input type="number" name="lat" step="0.001" min="-66" max="66" required></label>
+        <label>Долгота <input type="number" name="lon" step="0.001" min="-180" max="180" required></label>
+        <div class="aa-form-actions">
+          <button type="submit" class="aa-btn">Пересчитать</button>
+          <button type="button" class="aa-btn aa-btn-ghost" data-aa="birth-reset">Вернуть исходные</button>
+        </div>
+      </form>
+      <p class="aa-note">Время рождения указано приблизительно. Асцендент и дома сдвигаются примерно на 1° за каждые 4 минуты, поэтому проверь разные варианты времени, если есть сомнения.</p>
+    </details>
+  </div>
+
+  <div class="aa-card aa-wheel-card">
+    <div class="aa-wheel" data-aa="wheel" role="img" aria-label="Колесо натальной карты"></div>
+  </div>
+
+  <h2 class="aa-h2">Ключевые точки</h2>
+  <div class="aa-grid" data-aa="key-points"></div>
+
+  <h2 class="aa-h2">Баланс карты</h2>
+  <div class="aa-card" data-aa="balance"></div>
+
+  <h2 class="aa-h2">Планеты</h2>
+  <div class="aa-card aa-table-wrap"><table class="aa-table" data-aa="planet-table"></table></div>
+
+  <h2 class="aa-h2">Дома</h2>
+  <div class="aa-card aa-table-wrap"><table class="aa-table" data-aa="house-table"></table></div>
+
+  <h2 class="aa-h2">Аспекты</h2>
+  <div class="aa-card" data-aa="aspects"></div>
+
+  <h2 class="aa-h2">Таро и твоя карта</h2>
+  <div class="aa-grid" data-aa="tarot-map"></div>
+
+  <p class="aa-note">Расчёт упрощённый (точность около 1°) и предназначен для символической практики. Толкования — это ассоциации, а не доказанные предсказания.</p>
+</section>
