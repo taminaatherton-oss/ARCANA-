@@ -1,0 +1,72 @@
+{
+  "sources": [
+    {
+      "id": "waite1911",
+      "title": "The Pictorial Key to the Tarot",
+      "author": "A. E. Waite",
+      "year": 1911,
+      "url": "https://sacred-texts.com/tarot/pkt/pkttp.htm",
+      "rights_note": "Public domain in the United States; this pack paraphrases rather than reproduces long passages."
+    },
+    {
+      "id": "tarotoo",
+      "title": "Tarotoo Tarot Dataset",
+      "url": "https://github.com/Tarotoo-com/tarot-dataset",
+      "license": "MIT",
+      "scope": "78 RWS cards; upright/reversed, contexts, associations."
+    },
+    {
+      "id": "deckaura",
+      "title": "Open Tarot Dataset",
+      "url": "https://deckaura.com/pages/open-tarot-dataset",
+      "license": "MIT",
+      "scope": "78 cards; upright/reversed, love, career, yes/no."
+    },
+    {
+      "id": "loveoracle",
+      "title": "Love Oracle Tarot Dataset",
+      "url": "https://github.com/Misko4b/love-oracle-tarot-dataset",
+      "license": "CC BY 4.0",
+      "scope": "78 cards, 22 languages, love meanings; translated language caveat."
+    },
+    {
+      "id": "swedishmuseum",
+      "title": "Runes — Swedish History Museum",
+      "url": "https://historiska.se/en/explore-history/history-hub/runes/"
+    },
+    {
+      "id": "copenhagen",
+      "title": "Runology — University of Copenhagen",
+      "url": "https://nors.ku.dk/english/research/runes/"
+    },
+    {
+      "id": "vikingmuseum",
+      "title": "Runes — Viking Ship Museum",
+      "url": "https://www.vikingeskibsmuseet.dk/en/professions/education/viking-age-people/runes"
+    },
+    {
+      "id": "reddit-runecasting",
+      "title": "Help with interpreting bind runes",
+      "url": "https://www.reddit.com/r/runecasting/comments/1siz7a8/help_with_interpreting_bind_runes/",
+      "type": "community discussion"
+    },
+    {
+      "id": "reddit-runes",
+      "title": "Bindrunes",
+      "url": "https://www.reddit.com/r/runes/comments/11dpzli/bindrunes/",
+      "type": "community discussion"
+    },
+    {
+      "id": "reddit-tarot-yesno",
+      "title": "How to configure tarot for yes/no questions",
+      "url": "https://www.reddit.com/r/tarot/comments/1s8kcnh/how_to_configure_tarot_for_yesno_questions_if_you/",
+      "type": "community discussion"
+    },
+    {
+      "id": "reddit-tarot-discussion",
+      "title": "Opinions on Yes or No questions",
+      "url": "https://www.reddit.com/r/tarot/comments/1laqmko",
+      "type": "community discussion"
+    }
+  ]
+}

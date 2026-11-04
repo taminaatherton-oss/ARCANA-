@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17151d"><title>ARCANA — База знаний</title>
+<style>
+:root{color-scheme:dark;--bg:#17151d;--panel:#211e29;--line:#393342;--text:#f3edf7;--muted:#b9adbf;--accent:#c6a5df}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,sans-serif;padding:20px;max-width:900px;margin:auto}
+h1{font-size:1.55rem;margin:.2rem 0}.muted{color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}
+input,select,button{font:inherit;border-radius:10px;padding:12px;border:1px solid var(--line);background:#17151d;color:var(--text)}input{width:100%;margin:8px 0}button{background:#5b426c;border:0;cursor:pointer}button:disabled{opacity:.5}.row{display:flex;gap:8px;flex-wrap:wrap}.row button{flex:1}.result{border-top:1px solid var(--line);padding:12px 0}.tag{font-size:.78rem;color:var(--accent)}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin:6px 0}.status{font-size:.9rem;color:var(--muted)}a{color:var(--accent)}
+</style></head><body>
+<header><div class="tag">ARCANA KNOWLEDGE MODULE</div><h1>Библиотека знаний</h1><p class="muted">Таро · Руны · Расклады · Ставы · Практика</p></header>
+<section class="panel"><div id="status" class="status">Загружаю локальный кэш или библиотеки GitHub…</div><div class="row" style="margin-top:10px"><button id="refresh">Обновить библиотеки</button><button id="allfiles">Показать состав</button></div></section>
+<section class="panel"><label for="q">Поиск по всем подключённым материалам</label><input id="q" placeholder="Например: перевёрнутая Луна, Феху, защита става, да или нет…"><div class="row"><button id="search">Найти трактовки</button><select id="limit"><option value="8">8 результатов</option><option value="15">15 результатов</option><option value="25">25 результатов</option></select></div><div id="results" style="margin-top:12px"></div></section>
+<section class="panel"><h2 style="font-size:1.1rem">Как пользоваться</h2><p class="muted">Вводи название карты/руны или вопрос. Поиск работает по локально сохранённым JSON-библиотекам. При первом открытии нужен интернет, чтобы загрузить базу с GitHub. После успешной загрузки поиск доступен офлайн на этом устройстве.</p><p class="muted">Это справочник трактовок, а не предсказатель: сопоставляй значения с вопросом, позицией расклада и выбранной традицией.</p></section>
+<script src="knowledge-loader.js"></script>
+<script>
+const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function load(){try{const r=await ARCANA_KNOWLEDGE.load();$('status').textContent=`Подключено файлов: ${r.count}. ${r.offline?'Работаю из офлайн-кэша.':'Библиотеки обновлены с GitHub.'}`;}catch(e){$('status').textContent='Не удалось загрузить базу: '+e.message;}}
+async function search(){const q=$('q').value.trim();if(!q)return;$('results').textContent='Ищу…';try{const hits=await ARCANA_KNOWLEDGE.search(q,Number($('limit').value));$('results').innerHTML=hits.length?hits.map(h=>`<article class="result"><div class="tag">${esc(h.file)} · совпадение ${h.score}</div><pre>${esc(h.excerpt)}</pre></article>`).join(''):'Совпадений не найдено. Попробуй другие слова.';}catch(e){$('results').textContent='Ошибка поиска: '+e.message;}}
+$('refresh').onclick=async()=>{ $('status').textContent='Обновляю…';try{const r=await ARCANA_KNOWLEDGE.refresh();$('status').textContent=`Обновлено файлов: ${r.count}.`; }catch(e){$('status').textContent='Ошибка обновления: '+e.message;}};
+$('search').onclick=search;$('q').addEventListener('keydown',e=>{if(e.key==='Enter')search()});$('allfiles').onclick=()=>{$('results').innerHTML=ARCANA_KNOWLEDGE.files.map(f=>`<div class="result">${esc(f)}</div>`).join('')||'Библиотеки ещё не загружены.'};
+load();
+</script></body></html>

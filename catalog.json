@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "title": "ARCANA Knowledge Pack",
+  "description": "Подключаемые локальные справочники Таро, рун и практики.",
+  "files": [
+    {
+      "file": "tarot-rws-core.ru.json",
+      "domain": "tarot",
+      "label": "Таро — 78 базовых карт"
+    },
+    {
+      "file": "tarot-reversals-methods.ru.json",
+      "domain": "tarot",
+      "label": "Перевёрнутые карты — методы"
+    },
+    {
+      "file": "tarot-reversals-waite-modern.ru.json",
+      "domain": "tarot",
+      "label": "Перевёрнутые значения — Уэйт и современный подход"
+    },
+    {
+      "file": "tarot-schools-contexts.ru.json",
+      "domain": "tarot",
+      "label": "Школы и контекстные трактовки"
+    },
+    {
+      "file": "tarot-spreads-combinations.ru.json",
+      "domain": "tarot",
+      "label": "Расклады и сочетания Таро"
+    },
+    {
+      "file": "tarot-yes-no.ru.json",
+      "domain": "tarot",
+      "label": "Ответы да/нет"
+    },
+    {
+      "file": "tarot-learning-reminders.ru.json",
+      "domain": "tarot",
+      "label": "Обучение и напоминания"
+    },
+    {
+      "file": "runes-elder-futhark-24.ru.json",
+      "domain": "runes",
+      "label": "Старший Футарк — 24 руны"
+    },
+    {
+      "file": "runes-spreads-combinations.ru.json",
+      "domain": "runes",
+      "label": "Рунические расклады и сочетания"
+    },
+    {
+      "file": "runes-staves-practice.ru.json",
+      "domain": "runes",
+      "label": "Рунические ставы — практика"
+    },
+    {
+      "file": "reddit-community-notes.ru.json",
+      "domain": "community",
+      "label": "Reddit — опыт сообщества"
+    }
+  ]
+}
