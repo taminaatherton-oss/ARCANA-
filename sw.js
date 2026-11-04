@@ -1,4 +1,4 @@
-const CACHE='arcana-shell-v4';
+const CACHE='arcana-shell-v5';
 const CORE=[
  './','./index.html','./styles.css','./app.js','./manifest.webmanifest',
  './assets/cat-logo.png','./assets/spark.svg','./assets/book.svg','./assets/cards.svg',

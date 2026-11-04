@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171321"><meta name="description" content="ARCANA — личная библиотека, исследовательский ИИ и дневник практики Таро.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css"><title>ARCANA — личная система Таро</title>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script defer src="https://unpkg.com/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<link rel="stylesheet" href="arcana-astro.css?v=3">
+</head><body>
+<div class="app-shell">
+ <aside class="sidebar" id="sidebar">
+  <a class="brand" href="#chat"><span class="brand-mark"><img src="assets/cat-logo.png" alt="ARCANA" onerror="this.style.display='none';this.parentElement.textContent='✧'"></span><span><b>ARCANA</b><small>the personal grimoire</small></span></a>
+  <div class="nav-caption">ПРОСТРАНСТВО</div>
+  <button class="nav active" data-view="chat"><img class="nav-icon" src="assets/spark.svg" alt=""><span>Ассистент</span></button>
+  <button class="nav" data-view="library"><img class="nav-icon" src="assets/book.svg" alt=""><span>Библиотека</span><span class="nav-count" id="bookCount">0</span></button>
+  <button class="nav" data-view="spreads"><img class="nav-icon" src="assets/cards.svg" alt=""><span>Расклады Таро</span></button>
+  <button class="nav" data-view="journal"><img class="nav-icon" src="assets/journal.svg" alt=""><span>Дневник практики</span></button>
+  <button class="nav" data-view="calendar"><img class="nav-icon" src="assets/calendar.svg" alt=""><span>Календарь</span></button>
+  <button class="nav" data-view="notes"><img class="nav-icon" src="assets/note.svg" alt=""><span>Личные записи</span></button>
+  <button class="nav" data-view="natal"><span class="nav-symbol">☽</span><span>Натальная карта</span></button>
+  <button class="nav" data-view="daycard"><span class="nav-symbol">✦</span><span>Карта дня</span></button>
+  <div class="sidebar-bottom"><span class="status-dot"></span><span>Личные данные остаются на устройстве</span></div>
+  <button class="nav settings-link" data-view="settings"><img class="nav-icon" src="assets/settings.svg" alt=""><span>Настройки и ИИ</span></button>
+ </aside>
+ <main class="main">
+  <header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn" aria-label="Меню">☰</button><div class="top-title"><b id="pageTitle">Ассистент</b><small id="statusLine">Твоя территория знаний</small></div><button class="icon-btn" id="newChat" title="Новый диалог">＋</button></header>
+  <section class="view active" id="view-chat"><div class="chat-wrap">
+   <div class="welcome" id="welcome"><div class="eyebrow">ARCANA INTELLIGENCE</div><div class="welcome-glyph">✧</div><h1>Ищи смысл.<br><em>Сверяй источники.</em></h1><p>Исследуй Таро, символы и традиции через свою библиотеку и материалы из открытых источников. Отделяй факты от интерпретаций.</p>
+    <div class="prompt-grid"><button class="prompt" data-prompt="Разбери значение карты Верховная Жрица в нескольких традициях. Сравни источники и укажи разногласия."><span>01</span> Сравнить трактовки аркана</button><button class="prompt" data-prompt="Как читать сочетание карт в раскладе Таро? Дай методику и примеры."><span>02</span> Изучить сочетания карт</button><button class="prompt" data-prompt="Найди в моей библиотеке материалы о символике Луны и покажи точные страницы."><span>03</span> Найти в моих книгах</button><button class="prompt" data-prompt="Объясни различия между системами Уэйта—Смит, Марсельским Таро и Таро Тота."><span>04</span> Сравнить школы Таро</button></div>
+   </div>
+   <div class="messages" id="messages" aria-live="polite"></div>
+   <form class="composer" id="chatForm"><textarea id="question" rows="1" placeholder="Задай вопрос для исследования…"></textarea><button class="send" type="submit" aria-label="Отправить">↗</button></form><div class="fineprint">Ссылки на книги и страницы показываются только при наличии данных. Символические трактовки не являются доказанным предсказанием.</div>
+  </div></section>
+  <section class="view" id="view-library"><div class="content">
+   <div class="section-head"><div><div class="eyebrow">YOUR KNOWLEDGE ARCHIVE</div><h1>Библиотека</h1><p>Книги, авторы, традиции и знания — в одном пространстве.</p></div><label class="primary-btn">＋ Импортировать<input id="fileInput" type="file" accept=".txt,.md,.pdf,.epub,.docx,.fb2,.html,.htm" multiple hidden></label></div>
+   <div class="library-tools"><input id="librarySearch" class="field" placeholder="Поиск по названию, автору, тегам…"><select id="categoryFilter" class="field"><option value="">Все категории</option><option>Таро</option><option>Руны</option><option>Символизм</option><option>История</option><option>Астрология</option><option>Практика</option><option>Другое</option></select></div>
+   <div class="notice"><b>Форматы:</b> PDF, EPUB, DOCX, FB2, HTML, TXT и MD. Сканированные PDF требуют OCR; он запускается отдельно и может быть тяжёлым для телефона.</div>
+   <div id="libraryList" class="library-grid"></div>
+  </div></section>
+  <section class="view" id="view-spreads"><div class="content wide-content">
+   <div class="section-head"><div><div class="eyebrow">TAROT LABORATORY</div><h1>Лаборатория раскладов</h1><p>Формулируй вопрос, выкладывай карты и исследуй связи между позициями.</p></div></div>
+   <div class="spread-layout"><div class="panel spread-setup"><h2>Новый расклад</h2><label for="spreadQuestion">Твой вопрос</label><textarea id="spreadQuestion" class="field" rows="3" placeholder="Какую ситуацию я хочу исследовать?"></textarea><label for="spreadType">Схема расклада</label><select id="spreadType" class="field"><option value="one">Одна карта — фокус дня</option><option value="three">Три карты — ситуация / препятствие / направление</option><option value="five">Пять карт — глубокий анализ</option><option value="choice">Две дороги — выбор</option></select><label for="tradition">Традиция толкования</label><select id="tradition" class="field"><option>Уэйт—Смит</option><option>Марсельское Таро</option><option>Таро Тота</option><option>Сравнить несколько традиций</option><option>Без привязки к школе</option></select><div class="button-row"><button class="secondary-btn" id="randomSpread">Вытянуть карты</button><button class="primary-btn" id="clearSpread">Очистить</button></div><p class="helper">Можно вытянуть случайные карты или выбрать каждую вручную. Перевёрнутое положение задаётся отдельно.</p></div><div class="panel spread-result"><div class="spread-heading"><div><div class="eyebrow">YOUR READING</div><h2>Карты расклада</h2></div><span class="pill" id="spreadCount">0 / 3</span></div><div id="spreadCards" class="spread-cards"><div class="empty-state">Выбери схему и нажми «Вытянуть карты».</div></div><div class="spread-actions"><button class="primary-btn" id="analyzeSpread">Исследовать расклад с ИИ</button><button class="secondary-btn" id="saveSpread">Сохранить в дневник</button></div><div id="spreadAnalysis" class="analysis-output"></div></div></div>
+   <div class="panel history-panel"><div class="spread-heading"><h2>История раскладов</h2><span class="helper">Сохранённые исследования</span></div><div id="spreadHistory" class="history-list"></div></div>
+  </div></section>
+  <section class="view" id="view-journal"><div class="content"><div class="eyebrow">PRACTICE & REFLECTION</div><h1>Дневник практики</h1><p class="intro">Записывай не только карты, но и собственные наблюдения. Возвращайся к ним и сравнивай трактовки со временем.</p>
+   <div class="journal-stats" id="journalStats"></div><div class="panel journal-form"><h2>Новая запись</h2><input id="journalTitle" class="field" placeholder="Название наблюдения"><textarea id="journalBody" class="field" rows="5" placeholder="Что заметила? Какие символы повторяются? Что хочется проверить позже?"></textarea><div class="journal-form-bottom"><label class="check-label"><input id="journalReminder" type="checkbox"> Напомнить вернуться к записи</label><input id="journalReminderDate" class="field" type="datetime-local"></div><button class="primary-btn" id="saveJournal">Сохранить наблюдение</button></div><div class="section-subhead"><h2>История наблюдений</h2><input id="journalSearch" class="field compact-field" placeholder="Найти запись…"></div><div id="journalList" class="journal-list"></div>
+  </div></section>
+  <section class="view" id="view-calendar"><div class="content"><div class="eyebrow">RHYTHM OF PRACTICE</div><h1>Календарь</h1><p class="intro">Расклады, записи и напоминания в хронологии твоей практики.</p><div class="panel calendar-panel"><div class="calendar-head"><button class="icon-btn" id="prevMonth">‹</button><h2 id="calendarTitle"></h2><button class="icon-btn" id="nextMonth">›</button></div><div class="calendar-grid" id="calendarGrid"></div></div><div class="section-subhead"><h2>События выбранного дня</h2><span id="selectedDateLabel" class="helper"></span></div><div id="calendarEvents" class="history-list"></div></div></section>
+  <section class="view" id="view-notes"><div class="content"><div class="eyebrow">PRIVATE PAGES</div><h1>Личные записи</h1><p class="intro">Идеи, вопросы, символы и мысли, которые хочется сохранить.</p><div class="panel note-editor"><input id="noteTitle" class="field" placeholder="Заголовок"><textarea id="noteBody" class="field" rows="5" placeholder="Твоя запись…"></textarea><button class="primary-btn" id="saveNote">Сохранить запись</button></div><div id="notesList" class="journal-list"></div></div></section>
+  <section class="view" id="view-natal"><div class="content aa-root" id="astro-host-natal"></div></section>
+  <section class="view" id="view-daycard"><div class="content aa-root" id="astro-host-daycard"></div></section>
+  <section class="view" id="view-settings"><div class="content settings"><div class="eyebrow">PERSONAL INTELLIGENCE</div><h1>Настройки и ИИ</h1><p class="intro">Выбери способ анализа. Локальный поиск по книгам работает без модели; генерация требует подключённой модели.</p>
+   <div class="panel settings-panel"><h2>Модель и подключение</h2><label for="aiMode">Режим работы</label><select id="aiMode" class="field"><option value="library">Только моя библиотека (поиск без генерации)</option><option value="remote">Удалённая модель (API)</option><option value="local">Локальная модель / сервер на устройстве</option></select><label for="apiUrl">Адрес совместимого Chat Completions API</label><input id="apiUrl" class="field" placeholder="http://127.0.0.1:8080/v1/chat/completions"><label for="modelName">Название модели</label><input id="modelName" class="field" placeholder="Имя загруженной модели"><label for="apiKey">API-ключ (если требуется)</label><input id="apiKey" class="field" type="password" autocomplete="off" placeholder="Хранится только в локальном хранилище этого браузера"><div class="notice">Для настоящего локального ИИ нужна отдельно установленная модель и локальный сервер, совместимый с OpenAI API. Само приложение не содержит гигабайты модели и не загружает её автоматически.</div><button class="primary-btn" id="saveSettings">Сохранить настройки</button><button class="secondary-btn" id="testAI">Проверить подключение</button><p id="settingsStatus" class="status"></p></div>
+   <div class="panel settings-panel"><h2>Интернет-источники</h2><p class="helper">Встроенный исследовательский поиск обращается к открытым Wikimedia и Crossref API. Это не поиск по всему интернету. Можно подключить собственный поисковый endpoint, если он возвращает JSON с результатами.</p><label for="webSearchUrl">Дополнительный поисковый endpoint (необязательно)</label><input id="webSearchUrl" class="field" placeholder="https://…?q={query}"><label for="webSearchKey">Ключ дополнительного поиска</label><input id="webSearchKey" class="field" type="password" placeholder="Необязательно"><button class="secondary-btn" id="saveWebSettings">Сохранить параметры поиска</button><p id="webStatus" class="status"></p></div>
+   <div class="panel settings-panel"><h2>Резервная копия и перенос</h2><p class="helper">База хранится отдельно на каждом устройстве. Экспортируй резервную копию с одного устройства и импортируй на другом.</p><div class="button-row"><button class="secondary-btn" id="exportData">Экспортировать резервную копию</button><label class="secondary-btn import-backup">Импортировать резервную копию<input type="file" id="importBackup" accept=".json,application/json" hidden></label></div><button class="danger-btn" id="clearData">Удалить все локальные данные</button></div>
+   <div class="panel settings-panel"><h2>Уведомления</h2><p class="helper">Разреши уведомления, чтобы ARCANA могла напоминать о записях. В браузерной версии проверка расписания надёжнее всего работает, пока приложение открыто или при следующем запуске. Для гарантированных уведомлений при полностью закрытом приложении нужен push-сервис или нативный Android alarm.</p><button class="secondary-btn" id="enableNotifications">Разрешить уведомления</button><p id="notificationStatus" class="status"></p></div>
+  </div></section>
+ </main>
+</div><div id="toast" class="toast" role="status"></div><script src="app.js"></script>
+<script src="arcana-ephemeris.js?v=3"></script>
+<script src="arcana-astro-data.js?v=3"></script>
+<script src="arcana-astro-core.js?v=3"></script>
+<script src="arcana-natal.js?v=3"></script>
+<script src="arcana-daycard.js?v=3"></script>
+<script>
+/* ARCANA · подключение разделов «Натальная карта» и «Карта дня» (работает с существующим меню, ничего в app.js не меняет) */
+(function(){
+ var V={natal:{file:'natal.html',mod:'ArcanaNatal',title:'Натальная карта'},daycard:{file:'day-card.html',mod:'ArcanaDayCard',title:'Карта дня'}};
+ var loaded={};
+ function open(v){
+  var cfg=V[v],host=document.getElementById('astro-host-'+v),t=document.getElementById('pageTitle');
+  if(t)t.textContent=cfg.title;
+  function draw(){try{window[cfg.mod].render(host)}catch(e){host.innerHTML='<p style="color:#a99fc0">Не удалось построить раздел: '+e.message+'</p>'}}
+  if(loaded[v]){draw();return}
+  host.innerHTML='<p style="color:#a99fc0">Загрузка…</p>';
+  fetch(cfg.file+'?v=3').then(function(r){if(!r.ok)throw new Error('файл '+cfg.file+' не найден');return r.text()}).then(function(h){host.innerHTML=h;loaded[v]=1;draw()}).catch(function(e){host.innerHTML='<p style="color:#a99fc0">'+e.message+'</p>'});
+ }
+ Object.keys(V).forEach(function(v){var b=document.querySelector('.nav[data-view="'+v+'"]');if(b)b.addEventListener('click',function(){open(v)})});
+ window.addEventListener('load',function(){var h=location.hash.slice(1);if(V[h])setTimeout(function(){open(h)},900)});
+})();
+</script>
+</body></html>
